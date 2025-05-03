@@ -1,0 +1,74 @@
+﻿<Page x:Class="Hospital.UI.Pages.ResourcesSpentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:local="clr-namespace:Hospital.UI.Behaviors"
+      xmlns:controls="clr-namespace:Hospital.UI.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ResourcesSpentPage">
+
+    <b:Interaction.Behaviors>
+        <local:EventToCommandBehavior EventName="Loaded"
+                                      Command="{Binding AppearingCommand}" />
+    </b:Interaction.Behaviors>
+
+    <Grid>
+
+        <StackPanel Orientation="Vertical">
+
+            <ListView Grid.Column="0" 
+                      ItemsSource="{Binding ResourcesSpent}" 
+                      SelectedItem="{Binding SelectedResourceSpent}" 
+                      Margin="0 0 5 0"
+                      MinHeight="150">
+
+                <b:Interaction.Behaviors>
+                    <local:SelectedItemBehavior Command="{Binding ResourceSpentSelectedCommand}" />
+                </b:Interaction.Behaviors>
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Resource}" Width="150">Название</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Comment}" Width="150">Комментарий</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Count}" Width="75">Кол-во</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <StackPanel Orientation="Vertical" Margin="0 10">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Название" MinWidth="75" />
+                    <TextBox Text="{Binding ResourceName}" MinWidth="175" Margin="10 0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0 10">
+                    <TextBlock Text="Комментарий" MinWidth="75"/>
+                    <TextBox Text="{Binding Comment}" MinWidth="175" Margin="10 0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Кол-во" MinWidth="75" />
+                    <TextBox Text="{Binding Count}" MinWidth="175" Margin="10 0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0 20">
+                    <Button Content="Добавить" Width="60" Command="{Binding AddCommand}" />
+                    <Button Content="Изменить" Width="60" Margin="5 0" Command="{Binding EditCommand}" />
+                    <Button Content="Удалить" Width="60" Command="{Binding DeleteCommand}" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <controls:GoBackButton GoBackCommand="{Binding GoBackCommand}" 
+                               VerticalAlignment="Bottom" 
+                               HorizontalAlignment="Left"
+                               Margin="10"/>
+
+    </Grid>
+</Page>
