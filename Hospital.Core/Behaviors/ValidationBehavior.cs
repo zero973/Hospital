@@ -16,7 +16,7 @@ internal class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TR
 
         var validationResults = new List<ValidationResult>();
         foreach (var validator in validators)
-            validationResults.Add(await validator.ValidateAsync(context));
+            validationResults.Add(await validator.ValidateAsync(context, cancellationToken));
 
         var failures = validationResults
             .SelectMany(result => result.Errors)
@@ -43,6 +43,6 @@ internal class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TR
             return (TResponse)(object)Result.Error(errorList);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }
